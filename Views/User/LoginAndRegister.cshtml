@@ -1,3 +1,7 @@
+@if (ViewBag.AuthorizationError != null)
+{
+  <p class="text-danger font-weight-bold">@ViewBag.AuthorizationError</p>
+}
 
 <partial name="_Register"></partial>
 <partial name="_Login"></partial>
