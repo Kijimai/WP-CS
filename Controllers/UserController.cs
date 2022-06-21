@@ -89,4 +89,11 @@ public class UserController : Controller
     }
     return View("Dashboard");
   }
+
+  [HttpPost("/logout")]
+  public IActionResult Logout()
+  {
+    HttpContext.Session.Clear();
+    return RedirectToAction("LoginAndRegister");
+  }
 }

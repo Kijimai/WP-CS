@@ -4,4 +4,7 @@
 }
 
 <partial name="_Register"></partial>
-<partial name="_Login"></partial>
+@if (Context.Session.GetInt32("UserId") == null)
+{
+  <partial name="_Login"></partial>
+}

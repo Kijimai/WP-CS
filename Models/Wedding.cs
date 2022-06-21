@@ -29,6 +29,6 @@ public class Wedding
 
   public int UserId { get; set; }
 
-  public List<User> GuestCount { get; set; }
+  public List<User> Guests { get; set; } = new List<User>();
 
 }

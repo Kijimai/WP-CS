@@ -21,13 +21,13 @@ namespace WeddingPlanner.Migrations
 
             modelBuilder.Entity("UserWedding", b =>
                 {
-                    b.Property<int>("GuestCountUserId")
+                    b.Property<int>("GuestsUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("WeddingsWeddingId")
                         .HasColumnType("int");
 
-                    b.HasKey("GuestCountUserId", "WeddingsWeddingId");
+                    b.HasKey("GuestsUserId", "WeddingsWeddingId");
 
                     b.HasIndex("WeddingsWeddingId");
 
@@ -130,7 +130,7 @@ namespace WeddingPlanner.Migrations
                 {
                     b.HasOne("WeddingPlanner.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("GuestCountUserId")
+                        .HasForeignKey("GuestsUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

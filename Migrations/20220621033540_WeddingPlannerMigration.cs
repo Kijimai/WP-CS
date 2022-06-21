@@ -91,15 +91,15 @@ namespace WeddingPlanner.Migrations
                 name: "UserWedding",
                 columns: table => new
                 {
-                    GuestCountUserId = table.Column<int>(type: "int", nullable: false),
+                    GuestsUserId = table.Column<int>(type: "int", nullable: false),
                     WeddingsWeddingId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserWedding", x => new { x.GuestCountUserId, x.WeddingsWeddingId });
+                    table.PrimaryKey("PK_UserWedding", x => new { x.GuestsUserId, x.WeddingsWeddingId });
                     table.ForeignKey(
-                        name: "FK_UserWedding_Users_GuestCountUserId",
-                        column: x => x.GuestCountUserId,
+                        name: "FK_UserWedding_Users_GuestsUserId",
+                        column: x => x.GuestsUserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
