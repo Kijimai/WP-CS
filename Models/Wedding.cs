@@ -8,11 +8,13 @@ public class Wedding
   [Key]
   public int WeddingId { get; set; }
 
-  [Required]
+  [Required(ErrorMessage = "Wedder One's name is required!")]
+  [MinLength(4, ErrorMessage = "Wedder One's name must be included and at least 4 characters long!")]
   [Display(Name = "Wedder One")]
   public string WedderOne { get; set; }
 
-  [Required]
+  [Required(ErrorMessage = "Wedder Two's name is required!")]
+  [MinLength(4, ErrorMessage = "Wedder Two's name must be included and at least 4 characters long!")]
   [Display(Name = "Wedder Two")]
   public string WedderTwo { get; set; }
 
