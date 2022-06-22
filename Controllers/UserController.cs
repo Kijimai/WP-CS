@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WeddingPlanner.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace WeddingPlanner.Controllers;
 
@@ -13,6 +14,23 @@ public class UserController : Controller
   {
     _context = context;
   }
+
+  private int? UserId
+  {
+    get
+    {
+      return HttpContext.Session.GetInt32("UserId");
+    }
+  }
+
+  private bool loggedIn
+  {
+    get
+    {
+      return UserId != null;
+    }
+  }
+
   [HttpGet("")]
   public IActionResult LoginAndRegister()
   {
@@ -77,12 +95,14 @@ public class UserController : Controller
   [HttpGet("dashboard")]
   public IActionResult Dashboard()
   {
-    int? loginUserID = HttpContext.Session.GetInt32("UserId");
-    if (loginUserID == null)
+    if (UserId == null)
     {
       return LoginAndRegister();
     }
-    return View("Dashboard");
+
+    List<Wedding> AllWeddings = _context.Weddings.Include(wedding => wedding.Planner).Include(wedding => wedding.Guests).Where(wedding => wedding.Date > DateTime.Now).ToList();
+
+    return View("Dashboard", AllWeddings);
   }
 
   [HttpPost("/logout")]

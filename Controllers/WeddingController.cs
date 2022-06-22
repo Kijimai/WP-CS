@@ -7,7 +7,7 @@ namespace WeddingPlanner.Controllers;
 
 public class WeddingController : Controller
 {
-  private int? userId
+  private int? UserId
   {
     get
     {
@@ -19,7 +19,7 @@ public class WeddingController : Controller
   {
     get
     {
-      return userId != null;
+      return UserId != null;
     }
   }
 
@@ -30,22 +30,36 @@ public class WeddingController : Controller
     _context = context;
   }
 
-  [HttpGet("weddings/create")]
+  [HttpGet("/weddings/create")]
   public IActionResult Create()
   {
+    if (!loggedIn)
+    {
+      return RedirectToAction("LoginAndRegister", "User");
+    }
     return View("CreateWedding");
   }
 
-  [HttpPost("weddings/new")]
+  [HttpPost("/weddings/new")]
   public IActionResult New(Wedding newWedding)
   {
+    if (UserId == null)
+    {
+      return RedirectToAction("LoginAndRegister", "User");
+    }
+
     if (ModelState.IsValid == false)
     {
-      return RedirectToAction("Create");
+      return Create();
     }
+
+    newWedding.UserId = (int)UserId;
     _context.Weddings.Add(newWedding);
     _context.SaveChanges();
+
     return RedirectToAction("Dashboard", "User");
   }
+
+  
 
 }

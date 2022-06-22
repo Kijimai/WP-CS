@@ -1,3 +1,5 @@
+@model List<Wedding>
+
 <h2>Welcome to Wedding Planner</h2>
 
 <table class="table">
@@ -10,12 +12,20 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Person & Person</td>
-      <td>Oct 1 2023</td>
-      <td>5</td>
-      <td>Action Here</td>
-    </tr>
+    @foreach (Wedding wedding in Model)
+    {
+      <tr>
+        <td>@wedding.WedderOne & @wedding.WedderTwo</td>
+        <td>@wedding.Date.ToString("MMMM dd yyyy")</td>
+        <td>@wedding.Guests.Count</td>
+        <td>
+          <form>
+            Join Here
+          </form>
+        </td>
+      </tr>
+    }
+
   </tbody>
 </table>
 
