@@ -9,5 +9,5 @@ public class WeddingPlannerContext : DbContext
 
   public DbSet<User> Users { get; set; }
   public DbSet<Wedding> Weddings { get; set; }
-  public DbSet<Association> Associations { get; set; }
+  public DbSet<Association> UserWeddingSignups { get; set; }
 }

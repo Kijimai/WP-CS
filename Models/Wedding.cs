@@ -26,11 +26,14 @@ public class Wedding
   [DateValidator]
   public DateTime Date { get; set; }
 
+  public string? ImageUrl { get; set; }
+
   public DateTime createdAt { get; set; } = DateTime.Now;
   public DateTime updatedAt { get; set; } = DateTime.Now;
 
   public int UserId { get; set; }
+  public User? Planner { get; set; }
 
-  public List<User> Guests { get; set; } = new List<User>();
+  public List<Association> Guests { get; set; } = new List<Association>();
 
 }

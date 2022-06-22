@@ -41,4 +41,5 @@ public class User
   public List<Wedding> Weddings { get; set; } = new List<Wedding>();
   //Many to Many -- One User can like many posts
 
+  public List<Association> JoinedWeddings { get; set; } = new List<Association>();
 }

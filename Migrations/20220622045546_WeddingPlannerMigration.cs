@@ -50,6 +50,8 @@ namespace WeddingPlanner.Migrations
                     Address = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     createdAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     updatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -57,11 +59,17 @@ namespace WeddingPlanner.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Weddings", x => x.WeddingId);
+                    table.ForeignKey(
+                        name: "FK_Weddings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Associations",
+                name: "UserWeddingSignups",
                 columns: table => new
                 {
                     AssociationId = table.Column<int>(type: "int", nullable: false)
@@ -71,15 +79,15 @@ namespace WeddingPlanner.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Associations", x => x.AssociationId);
+                    table.PrimaryKey("PK_UserWeddingSignups", x => x.AssociationId);
                     table.ForeignKey(
-                        name: "FK_Associations_Users_UserId",
+                        name: "FK_UserWeddingSignups_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Associations_Weddings_WeddingId",
+                        name: "FK_UserWeddingSignups_Weddings_WeddingId",
                         column: x => x.WeddingId,
                         principalTable: "Weddings",
                         principalColumn: "WeddingId",
@@ -87,60 +95,32 @@ namespace WeddingPlanner.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "UserWedding",
-                columns: table => new
-                {
-                    GuestsUserId = table.Column<int>(type: "int", nullable: false),
-                    WeddingsWeddingId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserWedding", x => new { x.GuestsUserId, x.WeddingsWeddingId });
-                    table.ForeignKey(
-                        name: "FK_UserWedding_Users_GuestsUserId",
-                        column: x => x.GuestsUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserWedding_Weddings_WeddingsWeddingId",
-                        column: x => x.WeddingsWeddingId,
-                        principalTable: "Weddings",
-                        principalColumn: "WeddingId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateIndex(
-                name: "IX_Associations_UserId",
-                table: "Associations",
+                name: "IX_UserWeddingSignups_UserId",
+                table: "UserWeddingSignups",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Associations_WeddingId",
-                table: "Associations",
+                name: "IX_UserWeddingSignups_WeddingId",
+                table: "UserWeddingSignups",
                 column: "WeddingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserWedding_WeddingsWeddingId",
-                table: "UserWedding",
-                column: "WeddingsWeddingId");
+                name: "IX_Weddings_UserId",
+                table: "Weddings",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Associations");
-
-            migrationBuilder.DropTable(
-                name: "UserWedding");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserWeddingSignups");
 
             migrationBuilder.DropTable(
                 name: "Weddings");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
