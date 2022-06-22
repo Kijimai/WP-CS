@@ -19,11 +19,6 @@ public class UserController : Controller
     return View("LoginAndRegister");
   }
 
-  // [HttpGet("dashboard")]
-  // public IActionResult Dashboard() {
-
-  // } 
-
   [HttpPost("register/new")]
   public IActionResult RegisterUser(User newUser)
   {

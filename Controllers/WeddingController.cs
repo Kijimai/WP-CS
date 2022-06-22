@@ -7,6 +7,22 @@ namespace WeddingPlanner.Controllers;
 
 public class WeddingController : Controller
 {
+  private int? userId
+  {
+    get
+    {
+      return HttpContext.Session.GetInt32("UserId");
+    }
+  }
+
+  private bool loggedIn
+  {
+    get
+    {
+      return userId != null;
+    }
+  }
+
   private WeddingPlannerContext _context;
 
   public WeddingController(WeddingPlannerContext context)
