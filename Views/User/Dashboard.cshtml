@@ -15,7 +15,9 @@
     @foreach (Wedding wedding in Model)
     {
       <tr>
-        <td>@wedding.WedderOne & @wedding.WedderTwo</td>
+        <td><a asp-controller="Wedding" asp-action="ViewOneWedding"
+          asp-route-weddingId="@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a>
+        </td>
         <td>@wedding.Date.ToString("MMMM dd yyyy")</td>
         <td>@wedding.Guests.Count</td>
         <td>

@@ -92,7 +92,7 @@ public class UserController : Controller
     return RedirectToAction("Dashboard");
   }
 
-  [HttpGet("dashboard")]
+  [HttpGet("/dashboard")]
   public IActionResult Dashboard()
   {
     if (UserId == null)
