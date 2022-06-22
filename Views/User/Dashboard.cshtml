@@ -14,6 +14,8 @@
   <tbody>
     @foreach (Wedding wedding in Model)
     {
+      bool alreadyAttending = wedding.Guests.Any(guest => guest.UserId == Context.Session.GetInt32("UserId"));
+
       <tr>
         <td><a asp-controller="Wedding" asp-action="ViewOneWedding"
           asp-route-weddingId="@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a>
@@ -21,13 +23,21 @@
         <td>@wedding.Date.ToString("MMMM dd yyyy")</td>
         <td>@wedding.Guests.Count</td>
         <td>
-          <form>
-            Join Here
+          <form asp-controller="Wedding" asp-action="JoinWedding" asp-route-weddingId="@wedding.WeddingId" method="POST">
+            <button>
+              @if (alreadyAttending)
+              {
+                <span>Unattend</span>
+              }
+              else
+              {
+                <span>RSVP</span>
+              }
+            </button>
           </form>
         </td>
       </tr>
     }
-
   </tbody>
 </table>
 

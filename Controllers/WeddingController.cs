@@ -2,7 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WeddingPlanner.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace WeddingPlanner.Controllers;
 
@@ -78,4 +77,32 @@ public class WeddingController : Controller
     return View("SingleWedding", wedding);
   }
 
+  [HttpPost("/weddings/{weddingId}/attend")]
+  public IActionResult JoinWedding(int weddingId)
+  {
+    if (UserId == null)
+    {
+      return RedirectToAction("LoginAndRegister", "User");
+    }
+
+    Association? existingRSVP = _context.UserWeddingSignups.FirstOrDefault(rsvp => rsvp.UserId == UserId && rsvp.WeddingId == weddingId);
+
+    if (existingRSVP == null)
+    {
+      Association newRSVP = new Association()
+      {
+        WeddingId = weddingId,
+        UserId = (int)UserId
+      };
+
+      _context.UserWeddingSignups.Add(newRSVP);
+    }
+    else
+    {
+      _context.UserWeddingSignups.Remove(existingRSVP);
+    }
+
+    _context.SaveChanges();
+    return RedirectToAction("Dashboard", "User");
+  }
 }

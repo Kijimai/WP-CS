@@ -1,2 +1,33 @@
 @model Wedding
 
+<h1>@Model.WedderOne and @Model.WedderTwo's Wedding</h1>
+
+<h2>Date: @Model.Date.ToString("MMMM dd, yyyy")</h2>
+
+<h2>Guests</h2>
+<div class="container d-flex flex-row">
+  @if (Model.Guests.Count > 0)
+  {
+    <ul class="flex-grow-0">
+      @foreach (Association user in Model.Guests)
+      {
+        <li>@user.Attendee.FirstName @user.Attendee.LastName</li>
+      }
+    </ul>
+  }
+  else
+  {
+    <p>No Guests.</p>
+  }
+  <div class="flex-grow-0">
+    @if (Model.ImageUrl != null)
+    {
+      <img class="w-100" src="@Model.ImageUrl" alt="@Model.WedderOne @Model.WedderTwo's Wedding" />
+    }
+    else
+    {
+      <img class="w-100"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" />
+    }
+  </div>
+</div>
